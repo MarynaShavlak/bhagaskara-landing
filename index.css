@@ -537,6 +537,9 @@ textarea:focus + label {
 }
 
 .socials__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -549,8 +552,8 @@ textarea:focus + label {
   align-items: center;
   justify-content: center;
   color: #000;
-  width: 100%;
   height: 100%;
+  width: 100%;
   text-decoration: none;
   font-size: 20px;
   font-weight: 400;
@@ -733,6 +736,53 @@ textarea {
   padding-bottom: 200px;
 }
 
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 100px;
+  row-gap: 60px;
+  margin-top: 200px;
+  width: 100%;
+}
+.skill {
+  flex-basis: 420px;
+  position: relative;
+}
+
+.skill-name {
+  font-family: 'Helvetica-Regular', sans-serif;
+  font-size: 23px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  color: #222222;
+}
+
+.skill-bar {
+  height: 20px;
+  background: #f0f0f0;
+}
+
+.skill-per {
+  height: 20px;
+  background-color: #9f449b;
+  width: 0;
+  transition: 1s linear;
+}
+
+.skill-per::before {
+  content: attr(per);
+  font-family: 'Helvetica-Light', sans-serif;
+  position: absolute;
+  padding: 4px 6px;
+  color: #777777;
+  font-size: 24px;
+  top: 0;
+  right: 15px;
+  transform: translateX(50%);
+}
+
 /* Team */
 .section--team {
   padding-top: 190px;
@@ -810,6 +860,7 @@ textarea {
 
 .link--team {
   color: #777777;
+  width: auto;
 }
 
 .owl-nav {
