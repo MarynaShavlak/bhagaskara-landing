@@ -738,6 +738,10 @@ textarea {
   padding-top: 190px;
   padding-bottom: 80px;
 }
+
+.team-list {
+  margin-top: 160px;
+}
 .team__item {
   background-color: green;
   display: flex;
