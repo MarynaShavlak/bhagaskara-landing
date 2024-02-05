@@ -1,11 +1,14 @@
 $(document).ready(function () {
   $('.owl-carousel').owlCarousel({
     loop: true,
-    navText: `<span>button</span>`,
+    navText: [
+      `<i class="fa-solid fa-chevron-left slider-team-btn"></i>`,
+      `<i class="fa-solid fa-chevron-right slider-team-btn"></i>`,
+    ],
     nav: true,
     responsive: {
       375: {
-        items: 2,
+        items: 1,
         margin: 40,
       },
       768: {
