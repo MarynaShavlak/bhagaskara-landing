@@ -107,10 +107,17 @@ a {
 .logo {
   font-family: 'Existence', sans-serif;
   font-size: 30px;
-  /* font-weight: 400; */
   letter-spacing: 0.03em;
   line-height: 1.19;
   color: #8a8d91;
+}
+.logo--footer {
+  font-size: 50px;
+  font-weight: 700;
+}
+.footer {
+  padding-top: 10px;
+  padding-bottom: 100px;
 }
 
 .text-accent {
@@ -161,7 +168,7 @@ a {
   width: fit-content;
 }
 
-.section__title::before {
+.section__title:not(.banner__title)::before {
   content: '';
   position: absolute;
   top: 0;
@@ -171,7 +178,7 @@ a {
   border-top: 1px solid #9f449b;
   border-right: 1px solid #9f449b;
 }
-.section__title::after {
+.section__title:not(.banner__title)::after {
   content: '';
   position: absolute;
   bottom: -10px;
@@ -200,6 +207,7 @@ a {
   text-align: center;
   font-size: 24px;
   font-weight: 300;
+  margin-top: 45px;
   margin-bottom: 28px;
 }
 .features__desc {
@@ -208,16 +216,16 @@ a {
   font-weight: 300;
   line-height: 2;
 }
-.features__icon-wrap {
+.hexagon-icon-wrap {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 45px;
+
   cursor: pointer;
 }
 
-.features__icon--small {
+.hexagon-icon {
   position: absolute;
   fill: #d1d5d7;
   top: 50%;
@@ -228,7 +236,7 @@ a {
   transition: fill 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.features__icon-wrap:hover .features__icon--small {
+.hexagon-icon-wrap:hover {
   fill: #9f449b;
 }
 
@@ -382,6 +390,87 @@ a {
     margin: 0 auto;
     margin-top: 30px;
   }
+}
+
+/* achievements  */
+.section--achievements {
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.achievements-list {
+  display: flex;
+}
+
+.achievement-value {
+  font-family: 'Helvetica-Regular', sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+  color: #222222;
+}
+.achievement-text {
+  font-weight: 300;
+  font-family: 'Helvetica-Light', sans-serif;
+
+  font-size: 16px;
+  color: #777777;
+}
+.achievement-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 767px) {
+  .achievements-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+  }
+  .achievement-item {
+    flex-basis: calc((100% - 50px) / 2);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .section--achievements {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+  .achievements-list {
+    gap: 100px;
+  }
+
+  .achievement-item {
+    flex-basis: calc((100% - 3 * 100px) / 4);
+  }
+  .achievement-value {
+    font-size: 40px;
+  }
+
+  .achievement-text {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .section--achievements {
+    padding-top: 160px;
+    padding-bottom: 160px;
+  }
+  .achievements-list {
+    gap: 160px;
+  }
+  .achievement-item {
+    flex-basis: calc((100% - 3 * 160px) / 4);
+  }
+}
+.achievement-value {
+  font-size: 64px;
+}
+
+.achievement-text {
+  font-size: 16px;
 }
 
 /* Contacts  */
@@ -617,21 +706,89 @@ textarea {
   margin-top: 40px;
 }
 
-/* .
+/* Banner  */
+.section--banner {
+  background-color: #8a8d91;
+  background-image: url('./images/banner-back.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 130px;
+  padding-bottom: 130px;
+  height: 630px;
+}
+.banner__title {
+  font-family: 'Lato', sans-serif;
+  color: #fff;
+  font-weight: 500;
+  font-size: 48px;
+  max-width: 742px;
+  margin-top: 64px;
+  line-height: 1.5;
+  padding: 0;
+}
 
+/* Skills */
+.section--skills {
+  padding-top: 80px;
+  padding-bottom: 200px;
+}
 
-.features__icon-wrap {
-  @extend %centeredFlex;
-  height: 120px;
+/* Team */
+.section--team {
+  padding-top: 190px;
+  padding-bottom: 80px;
+}
+.team__item {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team__img-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+}
+
+.team__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #484848;
   margin-bottom: 30px;
-
-  border-radius: $border-radius;
-  background-color: $second-bg-color;
+  text-align: center;
 }
 
-.features__icon {
-  width: 70px;
-  height: 70px;
+.team__meta {
+  padding-top: 80px;
+  padding-bottom: 20px;
 }
 
- */
+.team__text {
+  text-align: center;
+  width: 310px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #777777;
+}
+
+.team__socials {
+  justify-content: center;
+}
+
+.team__socials .socials__item {
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
+}
+
+.link--team {
+  color: #777777;
+}
