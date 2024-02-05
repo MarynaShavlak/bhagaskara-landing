@@ -23,33 +23,121 @@
     />
   </head>
   <body>
-    <i class="fa-regular fa-heart"></i>
-
     <header class="header">
       <div class="container">
-        <div class="header__container">
-          <div class="profile">
-            <div class="profile__avatar">
-              <i class="fa-solid fa-user profile__icon"></i>
-            </div>
-            <div class="profile__info">
-              <p class="profile__name">Lewis<br />Nathaniel</p>
-              <p class="profile__job">UI &amp; UX Designer</p>
-            </div>
-          </div>
-
-          <nav class="nav">
-            <a class="nav__link" href="#">Work</a>
-            <a class="nav__link" href="#">About me</a>
-            <a class="nav__link" href="#">Blog</a>
-            <a class="nav__link" href="#">Contact</a>
-            <button type="button" class="nav__btn" data-modal="hire-modal">
-              HIRE ME
-            </button>
-          </nav>
-        </div>
+        <nav class="nav">
+          <a class="logo" href="./index.html" lang="en"
+            >Bhagas<span class="logo__second-part">kara</span></a
+          >
+          <ul class="menu">
+            <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
+            <li class="menu__item"><a class="menu__link" href="#">About</a></li>
+            <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
+            <li class="menu__item">
+              <a class="menu__link" href="#">Services</a>
+            </li>
+            <li class="menu__item">
+              <a class="menu__link" href="#">Portfolio</a>
+            </li>
+            <li class="menu__item"><a class="menu__link" href="#">Blog</a></li>
+            <li class="menu__item">
+              <a class="menu__link" href="#">Contact</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
+    <main>
+      <section class="section--dark-back section--features">
+        <div class="container">
+          <h2 class="section__title visually-hidden">Features</h2>
+          <ul class="features">
+            <li class="features__item">
+              <div class="features__icon-wrap">
+                <img
+                  src="./images/hexagon.svg"
+                  alt="Hexagon shape"
+                  width="171"
+                  height="185"
+                />
+                <svg class="features__icon--small" width="37" height="32">
+                  <use href="./images/sprite.svg#icon-heart-icon"></use>
+                </svg>
+              </div>
+              <h3 class="features__title">Build with love</h3>
+              <p class="features__desc">
+                Fusce facilisis velit libero, nec dignissim lacus sagittis non.
+                Sed nec porta ante. Pellentesque habitant morbi tristique
+                senectus et.
+              </p>
+            </li>
+
+            <li class="features__item">
+              <div class="features__icon-wrap">
+                <img
+                  src="./images/hexagon.svg"
+                  alt="Hexagon shape"
+                  width="171"
+                  height="185"
+                />
+                <svg class="features__icon--small" width="37" height="32">
+                  <use href="./images/sprite.svg#icon-diamond"></use>
+                </svg>
+              </div>
+
+              <h3 class="features__title">Clean and modern</h3>
+              <p class="features__desc">
+                Fusce facilisis velit libero, nec dignissim lacus sagittis non.
+                Sed nec porta ante. Pellentesque habitant morbi tristique
+                senectus et.
+              </p>
+            </li>
+
+            <li class="features__item">
+              <div class="features__icon-wrap">
+                <img
+                  src="./images/hexagon.svg"
+                  alt="Hexagon shape"
+                  width="171"
+                  height="185"
+                />
+                <svg class="features__icon--small" width="37" height="32">
+                  <use href="./images/sprite.svg#icon-cup"></use>
+                </svg>
+              </div>
+
+              <h3 class="features__title">Easy to use</h3>
+              <p class="features__desc">
+                Fusce facilisis velit libero, nec dignissim lacus sagittis non.
+                Sed nec porta ante. Pellentesque habitant morbi tristique
+                senectus et.
+              </p>
+            </li>
+
+            <li class="features__item">
+              <div class="features__icon-wrap">
+                <img
+                  src="./images/hexagon.svg"
+                  alt="Hexagon shape"
+                  width="171"
+                  height="185"
+                />
+                <svg class="features__icon--small" width="37" height="32">
+                  <use href="./images/sprite.svg#icon-phone"></use>
+                </svg>
+              </div>
+
+              <h3 class="features__title">Fully Responsive</h3>
+              <p class="features__desc">
+                Fusce facilisis velit libero, nec dignissim lacus sagittis non.
+                Sed nec porta ante. Pellentesque habitant morbi tristique
+                senectus et.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
     <!-- <main>
       <section class="hero">
         <div class="container">
