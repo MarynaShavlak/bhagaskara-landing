@@ -4,9 +4,29 @@ $(document).ready(function () {
   initSkillsSection();
   initAchievementSection();
   initReviewsSection();
+  setMobileMenu();
 
   // addLoadContentEventHandlers();
-
+  function setMobileMenu() {
+    $('.mobile-menu-open').on('click', function () {
+      $('.mobile-menu-container').animate(
+        {
+          right: 0,
+        },
+        300,
+      );
+      $('body').addClass('no-scroll');
+    });
+    $('.mobile-menu-close').on('click', function () {
+      $('.mobile-menu-container').animate(
+        {
+          right: '-100vw',
+        },
+        300,
+      );
+      $('body').removeClass('no-scroll');
+    });
+  }
   function initTeamSection() {
     $('#owl-carousel1').owlCarousel({
       loop: true,
@@ -31,92 +51,7 @@ $(document).ready(function () {
       },
     });
   }
-  // function initSkillsSection() {
-  //   $('.skill-per').each(function () {
-  //     var $this = $(this);
-  //     var per = $this.attr('per');
-  //     $this.css('width', per + '%');
-  //     $({ animatedValue: 0 }).animate(
-  //       { animatedValue: per },
-  //       {
-  //         duration: 1000,
-  //         step: function () {
-  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //         },
-  //         complete: function () {
-  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //         },
-  //       },
-  //     );
-  //   });
-  // }
 
-  // function initSkillsSection() {
-  //   $('.skill-per').each(function () {
-  //     var $this = $(this);
-  //     var per = $this.attr('per');
-  //     $this.css('width', per + '%');
-  //     $({ animatedValue: 0 }).animate(
-  //       { animatedValue: per },
-  //       {
-  //         duration: 1000,
-  //         step: function () {
-  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //         },
-  //         complete: function () {
-  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //         },
-  //       },
-  //     );
-  //   });
-  // }
-  // function initSkillsSection() {
-  //   const elms = document.querySelectorAll('.skill-per');
-  //   console.log('elms: ', elms);
-  //   elms.forEach(el => {
-  //     new Waypoint({
-  //       element: el,
-  //       handler: function () {
-  //         var $this = $(this);
-  //         var per = $this.attr('per');
-  //         $this.css('width', per + '%');
-  //         $({ animatedValue: 0 }).animate(
-  //           { animatedValue: per },
-  //           {
-  //             duration: 1000,
-  //             step: function () {
-  //               $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //             },
-  //             complete: function () {
-  //               $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //             },
-  //           },
-  //         );
-  //         // counterUp(el);
-  //         this.destroy();
-  //       },
-  //       offset: 'bottom-in-view',
-  //     });
-  //   });
-
-  //   // $('.skill-per').each(function () {
-  //   //   var $this = $(this);
-  //   //   var per = $this.attr('per');
-  //   //   $this.css('width', per + '%');
-  //   //   $({ animatedValue: 0 }).animate(
-  //   //     { animatedValue: per },
-  //   //     {
-  //   //       duration: 1000,
-  //   //       step: function () {
-  //   //         $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //   //       },
-  //   //       complete: function () {
-  //   //         $this.attr('per', Math.floor(this.animatedValue) + '%');
-  //   //       },
-  //   //     },
-  //   //   );
-  //   // });
-  // }
   function initSkillsSection() {
     const elms = document.querySelectorAll('.skill-per');
 
@@ -282,14 +217,6 @@ $(document).ready(function () {
       });
     });
   }
-
-  // function addLoadContentEventHandlers() {
-  //   $(window).on('scroll', function () {
-  //     if (isElementInViewport(achievementsSection)) {
-  //       initAchievementSection();
-  //     }
-  //   });
-  // }
 
   function isElementInViewport(element) {
     const rect = element[0].getBoundingClientRect();
