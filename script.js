@@ -5,6 +5,7 @@ $(document).ready(function () {
   initAchievementSection();
   initReviewsSection();
   setMobileMenu();
+  sendEmail();
 
   addLoadContentEventHandlers();
 
@@ -256,5 +257,92 @@ $(document).ready(function () {
         (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
+  }
+
+  function sendEmail() {
+    $('.contact-form').on('submit', handleSubmitForm);
+    $('input,textarea').blur(function () {
+      console.log('blur');
+      $(this)
+        .parent()
+        .toggleClass('filled', $(this).val().trim() !== '');
+    });
+
+    function handleSubmitForm(e) {
+      console.log('sibmit');
+      e.preventDefault();
+      const isValid = isFormValid();
+      if (isValid) {
+        const formData = {
+          name: $('#name').val(),
+          email: $('#email').val(),
+          message: $('#message').val(),
+        };
+        console.log('It should be formData sending here with obj : ', formData);
+
+        resetSendFormData();
+      }
+    }
+
+    function isFormValid() {
+      $('.error-message').text('');
+      let hasError = false;
+      hasError =
+        validateField(
+          '#name',
+          'Name is required',
+          'Name should have at least 2 characters',
+        ) || hasError;
+      hasError =
+        validateField(
+          '#email',
+          'Email is required',
+          'Invalid email address',
+          isValidEmail,
+        ) || hasError;
+      hasError = validateField('#message', 'Message is required') || hasError;
+      return !hasError;
+
+      function validateField(
+        selector,
+        requiredError,
+        formatError,
+        validationFunction = null,
+      ) {
+        let fieldValue = $(selector).val().trim();
+        console.log('fieldValue: ', fieldValue);
+
+        if (fieldValue === '') {
+          $(`${selector}-error`).text(requiredError);
+          return true;
+        }
+        if (selector === '#name' && fieldValue.length < 2) {
+          $(`${selector}-error`).text(formatError);
+          return true;
+        }
+
+        if (validationFunction && !validationFunction(fieldValue)) {
+          $(`${selector}-error`).text(formatError);
+          return true;
+        }
+
+        return false;
+      }
+
+      function isValidEmail(email) {
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+    }
+
+    function resetSendFormData() {
+      $('#name').text('');
+      $('#name').val('');
+      $('#email').text('');
+      $('#email').val('');
+      $('#message').text('');
+      $('#message').val('');
+      $('.error-message').text('');
+    }
   }
 });
