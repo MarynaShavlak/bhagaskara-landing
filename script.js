@@ -6,7 +6,17 @@ $(document).ready(function () {
   initReviewsSection();
   setMobileMenu();
 
-  // addLoadContentEventHandlers();
+  addLoadContentEventHandlers();
+
+  function addLoadContentEventHandlers() {
+    const reviewsSection = document.querySelector('.reviews-slider');
+    $(window).on('scroll', function () {
+      if (isElementInViewport(reviewsSection)) {
+        setupReviewsSlider();
+        $(window).off('scroll');
+      }
+    });
+  }
   function setMobileMenu() {
     $('.mobile-menu-open').on('click', function () {
       $('.mobile-menu-container').animate(
@@ -30,9 +40,24 @@ $(document).ready(function () {
   function initTeamSection() {
     $('#owl-carousel1').owlCarousel({
       loop: true,
+
       navText: [
-        `<i class="fa-solid fa-chevron-left slider-team-btn"></i>`,
-        `<i class="fa-solid fa-chevron-right slider-team-btn"></i>`,
+        `
+                <svg class="hexagon-shape" >
+                  <use href="./images/sprite.svg#icon-hexagon"></use>
+                </svg>
+                <i class="fa-solid fa-chevron-left slider-team-btn"></i>
+              
+        
+        `,
+        `
+                <svg class="hexagon-shape" >
+                  <use href="./images/sprite.svg#icon-hexagon"></use>
+                </svg>
+                <i class="fa-solid fa-chevron-right slider-team-btn"></i>
+              
+        
+        `,
       ],
       nav: true,
       responsive: {
@@ -86,7 +111,11 @@ $(document).ready(function () {
 
   function initReviewsSection() {
     generateReviewsMarkup(reviewsData);
-    setupReviewsSlider();
+
+    const el = document.querySelector('.reviews-slider');
+    if (isElementInViewport(el)) {
+      setupReviewsSlider();
+    }
   }
 
   function generateReviewsMarkup(data) {
@@ -219,7 +248,7 @@ $(document).ready(function () {
   }
 
   function isElementInViewport(element) {
-    const rect = element[0].getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
