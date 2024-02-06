@@ -1,16 +1,11 @@
 import { reviewsData } from './data.js';
 $(document).ready(function () {
-  const achievementsSection = $('.section--achievements');
-  const achievementsList = $('.achievement-value');
-  const achievementIconsList = $('.achievement-icon');
-  const achievementTextsList = $('.achievement-text');
-  setAchievemenetSectionAnimation();
-  addEventHandlers();
-
   initTeamSection();
   initSkillsSection();
-
+  initAchievementSection();
   initReviewsSection();
+
+  // addLoadContentEventHandlers();
 
   function initTeamSection() {
     $('#owl-carousel1').owlCarousel({
@@ -36,25 +31,124 @@ $(document).ready(function () {
       },
     });
   }
+  // function initSkillsSection() {
+  //   $('.skill-per').each(function () {
+  //     var $this = $(this);
+  //     var per = $this.attr('per');
+  //     $this.css('width', per + '%');
+  //     $({ animatedValue: 0 }).animate(
+  //       { animatedValue: per },
+  //       {
+  //         duration: 1000,
+  //         step: function () {
+  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //         },
+  //         complete: function () {
+  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //         },
+  //       },
+  //     );
+  //   });
+  // }
+
+  // function initSkillsSection() {
+  //   $('.skill-per').each(function () {
+  //     var $this = $(this);
+  //     var per = $this.attr('per');
+  //     $this.css('width', per + '%');
+  //     $({ animatedValue: 0 }).animate(
+  //       { animatedValue: per },
+  //       {
+  //         duration: 1000,
+  //         step: function () {
+  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //         },
+  //         complete: function () {
+  //           $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //         },
+  //       },
+  //     );
+  //   });
+  // }
+  // function initSkillsSection() {
+  //   const elms = document.querySelectorAll('.skill-per');
+  //   console.log('elms: ', elms);
+  //   elms.forEach(el => {
+  //     new Waypoint({
+  //       element: el,
+  //       handler: function () {
+  //         var $this = $(this);
+  //         var per = $this.attr('per');
+  //         $this.css('width', per + '%');
+  //         $({ animatedValue: 0 }).animate(
+  //           { animatedValue: per },
+  //           {
+  //             duration: 1000,
+  //             step: function () {
+  //               $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //             },
+  //             complete: function () {
+  //               $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //             },
+  //           },
+  //         );
+  //         // counterUp(el);
+  //         this.destroy();
+  //       },
+  //       offset: 'bottom-in-view',
+  //     });
+  //   });
+
+  //   // $('.skill-per').each(function () {
+  //   //   var $this = $(this);
+  //   //   var per = $this.attr('per');
+  //   //   $this.css('width', per + '%');
+  //   //   $({ animatedValue: 0 }).animate(
+  //   //     { animatedValue: per },
+  //   //     {
+  //   //       duration: 1000,
+  //   //       step: function () {
+  //   //         $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //   //       },
+  //   //       complete: function () {
+  //   //         $this.attr('per', Math.floor(this.animatedValue) + '%');
+  //   //       },
+  //   //     },
+  //   //   );
+  //   // });
+  // }
   function initSkillsSection() {
-    $('.skill-per').each(function () {
-      var $this = $(this);
-      var per = $this.attr('per');
-      $this.css('width', per + '%');
-      $({ animatedValue: 0 }).animate(
-        { animatedValue: per },
-        {
-          duration: 1000,
-          step: function () {
-            $this.attr('per', Math.floor(this.animatedValue) + '%');
-          },
-          complete: function () {
-            $this.attr('per', Math.floor(this.animatedValue) + '%');
-          },
+    const elms = document.querySelectorAll('.skill-per');
+
+    elms.forEach(el => {
+      new Waypoint({
+        element: el,
+        handler: function () {
+          const per = el.getAttribute('per');
+          el.style.width = per + '%';
+          animateSkill(el, per);
+          this.destroy();
         },
-      );
+        offset: 'bottom-in-view',
+      });
     });
+    function animateSkill(element, percentage) {
+      let animatedValue = 0;
+      const duration = 1000;
+      const stepDuration = 10;
+      const stepValue = (percentage / duration) * stepDuration;
+
+      const animationInterval = setInterval(() => {
+        animatedValue += stepValue;
+        if (animatedValue >= percentage) {
+          animatedValue = percentage;
+          clearInterval(animationInterval);
+        }
+        element.setAttribute('per', Math.floor(animatedValue) + '%');
+      }, stepDuration);
+    }
   }
+
   function initReviewsSection() {
     generateReviewsMarkup(reviewsData);
     setupReviewsSlider();
@@ -88,8 +182,10 @@ $(document).ready(function () {
       return $reviewItem;
     }
   }
+
   function setupReviewsSlider() {
     let currentSlide = 0;
+    let autoplayInterval;
 
     initialize();
 
@@ -97,6 +193,7 @@ $(document).ready(function () {
       addControls();
       attachEventHandlers();
       toggleActiveThumbClass(currentSlide);
+      startAutoplay();
     }
 
     function addControls() {
@@ -106,6 +203,14 @@ $(document).ready(function () {
 
     function attachEventHandlers() {
       $('.thumbnail').on('click', handleThumbnailClick);
+      $('.reviews-slider').hover(
+        function () {
+          stopAutoplay();
+        },
+        function () {
+          startAutoplay();
+        },
+      );
     }
 
     function handleThumbnailClick() {
@@ -149,16 +254,42 @@ $(document).ready(function () {
       thumbList.addClass('shaded', 4000, 'easeOutBounce');
       thumbList.eq(index).removeClass('shaded');
     }
+    function startAutoplay() {
+      autoplayInterval = setInterval(() => {
+        currentSlide =
+          (currentSlide + 1) % $('.reviews-slider').children().length;
+        showSlide(currentSlide);
+        toggleActiveThumbClass(currentSlide);
+      }, 2000);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayInterval);
+    }
   }
 
-  function addEventHandlers() {
-    $(window).on('scroll', function () {
-      if (isElementInViewport(achievementsSection)) {
-        startCounterAnimation();
-        $(window).off('scroll');
-      }
+  function initAchievementSection() {
+    const counterUp = window.counterUp.default;
+    const elements = document.querySelectorAll('.achievement-value');
+    elements.forEach(el => {
+      new Waypoint({
+        element: el,
+        handler: function () {
+          counterUp(el);
+          this.destroy();
+        },
+        offset: 'bottom-in-view',
+      });
     });
   }
+
+  // function addLoadContentEventHandlers() {
+  //   $(window).on('scroll', function () {
+  //     if (isElementInViewport(achievementsSection)) {
+  //       initAchievementSection();
+  //     }
+  //   });
+  // }
 
   function isElementInViewport(element) {
     const rect = element[0].getBoundingClientRect();
@@ -169,32 +300,5 @@ $(document).ready(function () {
         (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
-  }
-
-  function startCounterAnimation() {
-    achievementsList.each(function () {
-      $(this)
-        .prop('Counter', 0)
-        .animate(
-          {
-            Counter: $(this).text(),
-          },
-          {
-            duration: 3000,
-            easing: 'swing',
-            step: function (now) {
-              $(this).text(Math.ceil(now));
-            },
-          },
-        );
-    });
-    achievementIconsList.animate({ scale: '1.2' }, 1000);
-    achievementTextsList.animate({ scale: '1.2' }, 1000);
-  }
-
-  function setAchievemenetSectionAnimation() {
-    if (isElementInViewport(achievementsSection)) {
-      startCounterAnimation();
-    }
   }
 });

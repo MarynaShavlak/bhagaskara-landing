@@ -393,6 +393,7 @@ a {
 }
 
 /* achievements  */
+
 .section--achievements {
   padding-top: 90px;
   padding-bottom: 90px;
@@ -402,7 +403,8 @@ a {
   display: flex;
 }
 
-.achievement-value {
+.achievement-value,
+.achievement-sign {
   font-family: 'Helvetica-Regular', sans-serif;
   font-weight: 500;
   font-size: 30px;
@@ -445,7 +447,8 @@ a {
   .achievement-item {
     flex-basis: calc((100% - 3 * 100px) / 4);
   }
-  .achievement-value {
+  .achievement-value,
+  .achievement-sign {
     font-size: 40px;
   }
 
@@ -464,13 +467,14 @@ a {
   .achievement-item {
     flex-basis: calc((100% - 3 * 160px) / 4);
   }
-}
-.achievement-value {
-  font-size: 64px;
-}
+  .achievement-value,
+  .achievement-sign {
+    font-size: 64px;
+  }
 
-.achievement-text {
-  font-size: 16px;
+  .achievement-text {
+    font-size: 16px;
+  }
 }
 
 /* Contacts  */
@@ -715,19 +719,70 @@ textarea {
   background-image: url('./images/banner-back.png');
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 130px;
-  padding-bottom: 130px;
-  height: 630px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height: 300px;
+}
+
+.section--banner .hexagon-icon-wrap {
+  width: 101px;
+  height: 105px;
+}
+.section--banner .hexagon-icon-wrap .hexagon-icon {
+  width: 37px;
+  height: 32px;
 }
 .banner__title {
   font-family: 'Lato', sans-serif;
   color: #fff;
   font-weight: 500;
-  font-size: 48px;
-  max-width: 742px;
-  margin-top: 64px;
+  font-size: 24px;
+  max-width: 250px;
+  margin-top: 30px;
   line-height: 1.5;
   padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .section--banner .hexagon-icon-wrap .hexagon-icon {
+    width: 60px;
+    height: 60px;
+  }
+  .section--banner .hexagon-icon-wrap {
+    width: 121px;
+    height: 135px;
+  }
+  .section--banner {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    height: 400px;
+  }
+  .banner__title {
+    font-size: 40px;
+    max-width: 500px;
+    margin-top: 30px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .section--banner .hexagon-icon-wrap {
+    width: 171px;
+    height: 185px;
+  }
+  .banner__title {
+    font-size: 48px;
+    max-width: 742px;
+    margin-top: 64px;
+  }
+  .section--banner {
+    padding-top: 130px;
+    padding-bottom: 130px;
+    height: 630px;
+  }
+  .banner__title {
+    font-size: 48px;
+    max-width: 742px;
+    margin-top: 64px;
+  }
 }
 
 /* Skills */
@@ -785,12 +840,12 @@ textarea {
 
 /* Team */
 .section--team {
-  padding-top: 190px;
-  padding-bottom: 80px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .team-list {
-  margin-top: 360px;
+  margin-top: 120px;
   position: relative;
 }
 .team__item {
@@ -805,47 +860,85 @@ textarea {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   overflow: hidden;
 }
-
-@media screen and (min-width: 768px) {
-  .team__img-wrap {
-    width: 200px;
-    height: 200px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .team__img-wrap {
-    width: 250px;
-    height: 250px;
-  }
+.team__meta {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .team__title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   color: #484848;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
-}
-
-.team__meta {
-  padding-top: 80px;
-  padding-bottom: 20px;
 }
 
 .team__text {
   text-align: center;
-  width: 310px;
   margin: 0 auto;
-  margin-bottom: 30px;
-  font-size: 18px;
+  margin-bottom: 20px;
+  font-size: 14px;
   line-height: 1.5;
   font-weight: 400;
   color: #777777;
+}
+
+@media screen and (min-width: 768px) {
+  .section--team {
+    padding-top: 100px;
+    padding-bottom: 70px;
+  }
+  .team-list {
+    margin-top: 260px;
+    position: relative;
+  }
+  .team__img-wrap {
+    width: 200px;
+    height: 200px;
+  }
+  .team__meta {
+    padding-top: 40px;
+  }
+  .team__title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .team__text {
+    /* width: 310px; */
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .section--team {
+    padding-top: 150px;
+    padding-bottom: 80px;
+  }
+  .team__img-wrap {
+    width: 250px;
+    height: 250px;
+  }
+  .team__meta {
+    padding-top: 80px;
+  }
+  .team__title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .team__text {
+    width: 310px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    font-size: 18px;
+  }
 }
 
 .team__socials {
@@ -865,7 +958,7 @@ textarea {
 
 .owl-nav {
   position: absolute;
-  top: -160px;
+  top: -80px;
   left: 50%;
   transform: translate(-50%, 0);
   display: flex;
@@ -873,8 +966,8 @@ textarea {
 }
 .owl-carousel .owl-nav button.owl-prev,
 .owl-carousel .owl-nav button.owl-next {
-  width: 60px;
-  height: 75px;
+  width: 30px;
+  height: 35px;
   border: 1px solid #9f449b;
   transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 }
@@ -882,6 +975,29 @@ textarea {
 .slider-team-btn {
   color: #9f449b;
   font-size: 20px;
+}
+@media screen and (min-width: 768px) {
+  .owl-nav {
+    top: -160px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  .owl-carousel .owl-nav button.owl-prev,
+  .owl-carousel .owl-nav button.owl-next {
+    width: 40px;
+    height: 55px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .owl-carousel .owl-nav button.owl-prev,
+  .owl-carousel .owl-nav button.owl-next {
+    width: 60px;
+    height: 75px;
+  }
+
+  .slider-team-btn {
+    font-size: 20px;
+  }
 }
 
 .owl-carousel .owl-nav button.owl-prev:hover,
@@ -901,14 +1017,13 @@ textarea {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  width: 170px;
-  height: 170px;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
 }
-
 .reviews__descr {
   font-family: 'Helvetica-Light', sans-serif;
-  font-size: 33px;
+  font-size: 18px;
   color: #4b4b4b;
   text-align: center;
 }
@@ -918,12 +1033,13 @@ textarea {
   font-family: 'Helvetica-Regular', sans-serif;
   font-weight: 400;
   color: #777777;
-  font-size: 20px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .reviews__container {
   position: relative;
-  max-width: 890px;
+  max-width: 250px;
   height: fit-content;
   width: auto;
   margin: 0 auto;
@@ -936,15 +1052,15 @@ textarea {
 }
 
 .reviews__item {
-  min-width: 890px;
-  width: 890px;
+  min-width: 250px;
+  width: 250зx;
 }
 .reviews__item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 48px;
-  max-width: 890px;
+  gap: 20px;
+  max-width: 250px;
 }
 
 .thumbnails {
@@ -952,7 +1068,7 @@ textarea {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 30px;
   transition: transform 0.5s ease-in-out;
 }
 
@@ -975,4 +1091,74 @@ textarea {
   display: flex;
   margin-top: 40px;
   width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .reviews__img-wrap {
+    width: 140px;
+    height: 140px;
+  }
+  .reviews__descr {
+    font-size: 26px;
+  }
+
+  .reviews__name {
+    font-size: 14px;
+  }
+
+  .reviews__container {
+    max-width: 600px;
+  }
+
+  .reviews__item {
+    min-width: 600px;
+    width: 600px;
+  }
+  .reviews__item {
+    gap: 30px;
+    max-width: 600px;
+  }
+
+  .thumbnails {
+    gap: 10px;
+    margin-top: 60px;
+  }
+
+  .thumb-container {
+    margin-top: 40px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .reviews__img-wrap {
+    width: 170px;
+    height: 170px;
+  }
+  .reviews__descr {
+    font-size: 33px;
+  }
+
+  .reviews__name {
+    font-size: 20px;
+  }
+
+  .reviews__container {
+    max-width: 890px;
+  }
+
+  .reviews__item {
+    min-width: 890px;
+    width: 890px;
+  }
+  .reviews__item {
+    gap: 48px;
+    max-width: 890px;
+  }
+
+  .thumbnails {
+    gap: 10px;
+    margin-top: 60px;
+  }
+
+  .thumb-container {
+    margin-top: 40px;
+  }
 }
