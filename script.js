@@ -460,12 +460,35 @@ $(document).ready(function () {
     }
 
     function setPortfolioFilter() {
+      const windowWidth = window.innerWidth;
+      console.log('windowWidth : ', windowWidth);
+      let columnWidth, gutter;
+
+      switch (true) {
+        case windowWidth >= 375 && windowWidth < 768:
+          columnWidth = 300;
+          gutter = 15;
+          break;
+        case windowWidth >= 768 && windowWidth < 1200:
+          columnWidth = 310;
+          gutter = 20;
+          break;
+        case windowWidth > 1200:
+          columnWidth = 360;
+          gutter = 25;
+          break;
+        default:
+          columnWidth = 360;
+          gutter = 25;
+      }
+
       const $portfolio = $('.portfolio-list').isotope({
         itemSelector: '.portfolio__item',
         percentPosition: true,
+        resize: true,
         masonry: {
-          columnWidth: 360,
-          gutter: 25,
+          columnWidth: columnWidth,
+          gutter: gutter,
         },
       });
 
