@@ -112,6 +112,12 @@ a {
   line-height: 1.19;
   color: #8a8d91;
 }
+.logo--header {
+  color: #fff;
+  font-size: 90px;
+  font-weight: 700;
+  margin: 0 auto;
+}
 .logo--footer {
   font-size: 50px;
   font-weight: 700;
@@ -123,6 +129,232 @@ a {
 
 .text-accent {
   color: #9f449b;
+}
+
+.hero {
+  color: #fff;
+  background-color: #8a8d91;
+  background-image: url(./images/hero-back.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 110px;
+  padding-bottom: 80px;
+  height: 1100px;
+}
+
+.hero__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 124px;
+}
+
+.hero__title {
+  font-size: 48px;
+  font-weight: 400;
+  margin-top: 80px;
+  margin-bottom: 30px;
+  color: #fff;
+}
+.hero__text {
+  font-size: 24px;
+  font-weight: 300;
+  color: #fff;
+  text-align: center;
+  max-width: 1060px;
+}
+
+.hero__decoration-links-list {
+  display: flex;
+  gap: 30px;
+}
+
+.links--first-line {
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.links--second-line {
+  justify-content: space-between;
+}
+.line-wrap {
+  display: flex;
+  gap: 30px;
+}
+
+.hexagon-link {
+  color: #fff;
+  font-size: 18px;
+}
+.hex-link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero .hexagon-shape.hero-hexagon-shape,
+.hero .hexagon-shape.hero-btn-wrap {
+  stroke-width: 2px;
+  stroke: #fff;
+}
+
+.hexagon-link:hover .hexagon-shape.hero-hexagon-shape,
+.hero-btn:hover .hexagon-shape.hero-btn-wrap {
+  stroke: #9f449b;
+  fill: #9f449b;
+}
+.hero .hexagon-shape.hero-btn-wrap {
+  width: 91px;
+  height: 91px;
+}
+
+.hero .fa-chevron-down {
+  font-size: 30px;
+}
+.hero-hexagon-icon {
+  width: 50px;
+  height: 50px;
+  fill: #fff;
+}
+
+.hexagon-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hexagon-icon-wrap .hexagon-shape {
+  stroke: #d1d5d7;
+  width: 71px;
+  height: 85px;
+  transition: stroke 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.section--features .hexagon-icon-wrap {
+  cursor: pointer;
+}
+
+.hexagon-icon {
+  position: absolute;
+  fill: #d1d5d7;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  transition: fill 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.hexagon-icon-wrap:hover .hexagon-icon {
+  fill: #9f449b;
+}
+.section--features .hexagon-icon-wrap:hover .hexagon-shape {
+  stroke: #9f449b;
+}
+.hero-btn {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.hero-btn .hexagon-icon {
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and (min-width: 768px) {
+  .logo--header {
+    font-size: 60px;
+  }
+  .hero {
+    padding-top: 70px;
+    padding-bottom: 80px;
+    height: 700px;
+  }
+
+  .hero__meta {
+    margin-bottom: 50px;
+  }
+
+  .hero__title {
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .hero__text {
+    font-size: 20px;
+    max-width: 730px;
+  }
+  .hero .hexagon-shape.hero-btn-wrap {
+    width: 50px;
+    height: 50px;
+  }
+
+  .hero .fa-chevron-down {
+    font-size: 30px;
+  }
+  .hero-hexagon-icon {
+    width: 50px;
+    height: 50px;
+    fill: #fff;
+  }
+  .links--first-line {
+    margin-bottom: 20px;
+  }
+
+  .hero .hero__decoration-link .hexagon-shape {
+    width: 100px;
+    height: 100px;
+  }
+  .hero .hero__decoration-link .hexagon-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .logo--header {
+    font-size: 90px;
+  }
+  .hero {
+    padding-top: 110px;
+    padding-bottom: 80px;
+    height: 1100px;
+  }
+
+  .hero__meta {
+    margin-bottom: 124px;
+  }
+
+  .hero__title {
+    font-size: 48px;
+    margin-top: 80px;
+    margin-bottom: 30px;
+  }
+  .hero__text {
+    font-size: 24px;
+    max-width: 1060px;
+  }
+  .hero .hexagon-shape.hero-btn-wrap {
+    width: 91px;
+    height: 91px;
+  }
+
+  .hero .fa-chevron-down {
+    font-size: 30px;
+  }
+  .hero-hexagon-icon {
+    width: 50px;
+    height: 50px;
+    fill: #fff;
+  }
+  .links--first-line {
+    margin-bottom: 30px;
+  }
 }
 
 .nav {
@@ -217,40 +449,6 @@ a {
   font-weight: 300;
   line-height: 2;
 }
-.hexagon-icon-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hexagon-icon-wrap .hexagon-shape {
-  stroke: #d1d5d7;
-  width: 71px;
-  height: 85px;
-  transition: stroke 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.section--features .hexagon-icon-wrap {
-  cursor: pointer;
-}
-
-.hexagon-icon {
-  position: absolute;
-  fill: #d1d5d7;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 28px;
-  height: 28px;
-  transition: fill 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.hexagon-icon-wrap:hover .hexagon-icon {
-  fill: #9f449b;
-}
-.section--features .hexagon-icon-wrap:hover .hexagon-shape {
-  stroke: #9f449b;
-}
 
 @media screen and (min-width: 768px) {
   .section--features {
@@ -305,7 +503,7 @@ a {
 
   .hexagon-icon {
     width: 68px;
-    height: 6dvh;
+    height: 68px;
   }
 }
 @media screen and (max-width: 767px) {
