@@ -1434,6 +1434,8 @@ textarea {
 .work__image {
   width: 360px;
   height: 360px;
+  opacity: 0.8;
+  transition: opacity 0.2s linear;
 }
 @media screen and (min-width: 1200px) {
   .section--portfolio {
@@ -1450,12 +1452,14 @@ textarea {
 
 .work {
   overflow: hidden;
-  /* box-shadow: 0 0 4px rgba(0, 0, 0, 0.25); */
   transition: box-shadow 0.2s linear;
 }
 
 .work:hover {
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+}
+.work:hover .work__image {
+  opacity: 1;
 }
 
 .about {
