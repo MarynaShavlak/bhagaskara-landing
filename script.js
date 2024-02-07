@@ -2,6 +2,7 @@ import { reviewsData, projectsData } from './data.js';
 $(document).ready(function () {
   initTeamSection();
   initSkillsSection();
+  initAboutUsModal();
   initAchievementSection();
   initReviewsSection();
   initPortfolio();
@@ -9,6 +10,11 @@ $(document).ready(function () {
   sendEmail();
 
   addLoadContentEventHandlers();
+
+  function initAboutUsModal() {
+    $('.learn-more-btn').on('click', () => showModal('.modal-backdrop-about'));
+    $('.close-modal-btn').on('click', () => hideModal('.modal-backdrop-about'));
+  }
 
   function addLoadContentEventHandlers() {
     const reviewsSection = document.querySelector('.reviews-slider');
@@ -461,7 +467,6 @@ $(document).ready(function () {
 
     function setPortfolioFilter() {
       const windowWidth = window.innerWidth;
-      console.log('windowWidth : ', windowWidth);
       let columnWidth, gutter;
 
       switch (true) {
@@ -513,7 +518,9 @@ $(document).ready(function () {
 
     function initProjectModal() {
       $('.portfolio__item').on('click', handleProjectModal);
-      $('.close-modal-btn').on('click', hideProjectModal);
+      $('.close-modal-btn').on('click', () =>
+        hideModal('.modal-backdrop-project'),
+      );
     }
     function initProjectModalSlider() {
       let currentIndex = 0;
@@ -545,25 +552,23 @@ $(document).ready(function () {
       const data = getProjectData(clickedElement);
       generateProjectModalMarkup(data);
       initProjectModalSlider();
-      showProjectModal();
+      showModal('.modal-backdrop-project');
     }
 
     function getProjectData(el) {
       return projectsData.filter(data => data.id === el.attr('data-id'))[0];
     }
-
-    function showProjectModal() {
-      $('.modal-backdrop-project').fadeIn('slow', function () {
-        $('body').addClass('modal-open');
-      });
-    }
-    function hideProjectModal() {
-      $('.modal-backdrop-project').fadeOut('slow', function () {
-        $('body').removeClass('modal-open');
-      });
-    }
   }
-
+  function showModal(selector) {
+    $(selector).fadeIn('slow', function () {
+      $('body').addClass('modal-open');
+    });
+  }
+  function hideModal(selector) {
+    $(selector).fadeOut('slow', function () {
+      $('body').removeClass('modal-open');
+    });
+  }
   function generatePortfolioMarkUp(data) {
     const $portfolioList = $('.portfolio-list');
     data.forEach((project, index) => {
