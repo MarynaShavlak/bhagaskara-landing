@@ -1,9 +1,10 @@
-import { reviewsData } from './data.js';
+import { reviewsData, projectsData } from './data.js';
 $(document).ready(function () {
   initTeamSection();
   initSkillsSection();
   initAchievementSection();
   initReviewsSection();
+  initPortfolio();
   setMobileMenu();
   sendEmail();
 
@@ -125,6 +126,7 @@ $(document).ready(function () {
       const $reviewItem = generateReviewItem(review);
       $reviewsSlider.append($reviewItem);
     });
+    addControls();
 
     function generateReviewItem(review) {
       const $reviewItem = $('<li>').addClass('reviews__item');
@@ -146,6 +148,20 @@ $(document).ready(function () {
       $reviewItem.append($reviewsWrap, $reviewsDescr, $reviewsName);
       return $reviewItem;
     }
+    function createThumbnailsSlider() {
+      const thumbnailsSlider = $('<div>').addClass(
+        'thumbnails thumbnails-slider',
+      );
+      for (let i = 0; i < reviewsData.length; i++) {
+        $('<div>').addClass('thumbnail').appendTo(thumbnailsSlider);
+      }
+
+      return thumbnailsSlider;
+    }
+    function addControls() {
+      const thumbnailsSlider = createThumbnailsSlider();
+      $('.reviews__container').append(thumbnailsSlider);
+    }
   }
 
   function setupReviewsSlider() {
@@ -155,15 +171,9 @@ $(document).ready(function () {
     initialize();
 
     function initialize() {
-      addControls();
       attachEventHandlers();
       toggleActiveThumbClass(currentSlide);
       startAutoplay();
-    }
-
-    function addControls() {
-      const thumbnailsSlider = createThumbnailsSlider();
-      $('.reviews__container').append(thumbnailsSlider);
     }
 
     function attachEventHandlers() {
@@ -181,16 +191,6 @@ $(document).ready(function () {
     function handleThumbnailClick() {
       const index = $(this).index();
       goToSlide(index);
-    }
-    function createThumbnailsSlider() {
-      const thumbnailsSlider = $('<div>').addClass(
-        'thumbnails thumbnails-slider',
-      );
-      for (let i = 0; i < reviewsData.length; i++) {
-        $('<div>').addClass('thumbnail').appendTo(thumbnailsSlider);
-      }
-
-      return thumbnailsSlider;
     }
 
     function showSlide(index) {
@@ -262,14 +262,12 @@ $(document).ready(function () {
   function sendEmail() {
     $('.contact-form').on('submit', handleSubmitForm);
     $('input,textarea').blur(function () {
-      console.log('blur');
       $(this)
         .parent()
         .toggleClass('filled', $(this).val().trim() !== '');
     });
 
     function handleSubmitForm(e) {
-      console.log('sibmit');
       e.preventDefault();
       const isValid = isFormValid();
       if (isValid) {
@@ -278,6 +276,9 @@ $(document).ready(function () {
           email: $('#email').val(),
           message: $('#message').val(),
         };
+        Notiflix.Notify.success(
+          `${formData.name}, your message was successfully sent`,
+        );
         console.log('It should be formData sending here with obj : ', formData);
 
         resetSendFormData();
@@ -310,7 +311,6 @@ $(document).ready(function () {
         validationFunction = null,
       ) {
         let fieldValue = $(selector).val().trim();
-        console.log('fieldValue: ', fieldValue);
 
         if (fieldValue === '') {
           $(`${selector}-error`).text(requiredError);
@@ -343,6 +343,328 @@ $(document).ready(function () {
       $('#message').text('');
       $('#message').val('');
       $('.error-message').text('');
+      $('.contact-form .control').removeClass('filled');
     }
+  }
+
+  function initPortfolio() {
+    const itemsPerPage = 6;
+    let currentIndex = 0;
+    let currentCategory = '*';
+
+    renderAndFilterPortfolio();
+
+    $('.load-more-btn').on('click', () => handleButtonClick('loadMore'));
+    $('.show-less-btn').on('click', () => handleButtonClick('showLess'));
+    initProjectModal();
+    function handleButtonClick(action) {
+      if (action === 'loadMore') {
+        currentIndex += itemsPerPage;
+      } else if (action === 'showLess') {
+        currentIndex -= itemsPerPage;
+      }
+      updateIsotope(action);
+      $('.portfolio__item').off('click', handleProjectModal);
+      $('.portfolio__item').on('click', handleProjectModal);
+      updateButtonsVisibility();
+    }
+
+    function updateButtonsVisibility() {
+      const filteredData = filterDataByCategory();
+
+      const isLoadMoreVisible =
+        currentIndex < filteredData.length - itemsPerPage;
+      const isShowLessVisible = currentIndex >= itemsPerPage;
+
+      $('.load-more-btn').toggle(isLoadMoreVisible);
+      $('.show-less-btn').toggle(isShowLessVisible);
+    }
+
+    function renderPortfolio() {
+      const $portfolioList = $('#portfolio');
+      $portfolioList.empty();
+      const slicedData = filterDataByCategory().slice(
+        0,
+        currentIndex + itemsPerPage,
+      );
+
+      generatePortfolioMarkUp(slicedData);
+    }
+
+    function renderAndFilterPortfolio() {
+      renderPortfolio();
+      setPortfolioFilter();
+    }
+
+    function updateIsotope(action) {
+      const $portfolioList = $('.portfolio-list');
+      const totalItems = $portfolioList.children().length;
+
+      const updateIsotopeLayout = () => $portfolioList.isotope('layout');
+
+      if (action === 'loadMore') {
+        const data = filterDataByCategory().slice(
+          currentIndex,
+          currentIndex + itemsPerPage,
+        );
+        const generatedMarkup = generatePortfolioMarkUp(data);
+        const $items = $(generatedMarkup);
+
+        $portfolioList.append($items).isotope('appended', $items);
+      } else if (action === 'showLess') {
+        const $itemsToRemove = $portfolioList
+          .isotope('getItemElements')
+          .slice(currentIndex + itemsPerPage, totalItems);
+
+        $portfolioList.isotope('remove', $itemsToRemove);
+        updateIsotopeLayout();
+      }
+
+      function generatePortfolioMarkUp(data) {
+        let markup = '';
+
+        data.forEach((project, index) => {
+          markup += generatePortfolioItemMarkup(project, index);
+        });
+
+        return markup;
+      }
+
+      function generatePortfolioItemMarkup(project, index) {
+        let itemMarkup = `<li class="portfolio__item" data-category="${`${project.categories.join(
+          ', ',
+        )}`}" data-id="${project.id}">`;
+        itemMarkup += `<div class="work" data-modal="#modal_project_${
+          index + 1
+        }">`;
+        itemMarkup += `<img class="work__image" src="images/${project.images[0]}" alt="project photo"/>`;
+        itemMarkup += '<div class="work__info">';
+        itemMarkup += `<div class="work__title">${project.title}</div>`;
+        itemMarkup += `<div class="work__category">${`${project.categories.join(
+          ', ',
+        )}`}</div>`;
+        itemMarkup += '</div></div></li>';
+
+        return itemMarkup;
+      }
+    }
+
+    function filterDataByCategory() {
+      return currentCategory !== '*'
+        ? projectsData.filter(project => project.category === currentCategory)
+        : projectsData;
+    }
+
+    function setPortfolioFilter() {
+      const $portfolio = $('.portfolio-list').isotope({
+        itemSelector: '.portfolio__item',
+        percentPosition: true,
+        masonry: {
+          columnWidth: 360,
+          gutter: 25,
+        },
+      });
+
+      const filterValue = $('.filter-btn--active').attr('data-filter');
+
+      $portfolio.isotope({ filter: filterValue });
+    }
+    function updateFilterButtons(chosenFilterBtn) {
+      const filters = $('[data-filter]');
+      filters.removeClass('filter-btn--active');
+      $(chosenFilterBtn).addClass('filter-btn--active');
+    }
+    $('.filter-btn').on('click', function () {
+      updateFilterButtons(this);
+      const filterValue = $(this).attr('data-filter');
+      currentCategory =
+        filterValue !== '*' ? filterValue.slice(1) : filterValue;
+      currentIndex = 0;
+      setPortfolioFilter();
+      updateButtonsVisibility();
+    });
+
+    function initProjectModal() {
+      $('.portfolio__item').on('click', handleProjectModal);
+      $('.close-modal-btn').on('click', hideProjectModal);
+    }
+    function initProjectModalSlider() {
+      let currentIndex = 0;
+      const slideCount = $('.project-slider img').length;
+
+      $('.project-next-btn').on('click', handleNextButtonClick);
+      $('.project-prev-btn').on('click', handlePrevButtonClick);
+
+      function handleNextButtonClick() {
+        currentIndex = currentIndex < slideCount - 1 ? currentIndex + 1 : 0;
+        updateSlider();
+      }
+
+      function handlePrevButtonClick() {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : slideCount - 1;
+        updateSlider();
+      }
+
+      function updateSlider() {
+        const translateValue = -currentIndex * 100 + '%';
+        $('.project-slider').css(
+          'transform',
+          'translateX(' + translateValue + ')',
+        );
+      }
+    }
+    function handleProjectModal(e) {
+      const clickedElement = $(e.currentTarget);
+      const data = getProjectData(clickedElement);
+      generateProjectModalMarkup(data);
+      initProjectModalSlider();
+      showProjectModal();
+    }
+    function getProjectData(el) {
+      return projectsData.filter(data => data.id === el.attr('data-id'))[0];
+    }
+
+    function showProjectModal() {
+      $('.modal-backdrop-project').fadeIn('slow', function () {
+        $('body').addClass('modal-open');
+      });
+    }
+    function hideProjectModal() {
+      $('.modal-backdrop-project').fadeOut('slow', function () {
+        $('body').removeClass('modal-open');
+      });
+    }
+  }
+
+  function generatePortfolioMarkUp(data) {
+    const $portfolioList = $('.portfolio-list');
+    data.forEach((project, index) => {
+      const item = generatePortfolioItem(project, index);
+      $portfolioList.append(item);
+    });
+
+    function generatePortfolioItem(project, index) {
+      const $portfolioItem = $('<li>')
+        .addClass(`portfolio__item`)
+        .attr('data-category', `${project.categories.join(', ')}`)
+        .attr('data-id', project.id);
+      const $work = $('<div>')
+        .addClass('work')
+        .attr('data-modal', `#modal_project_${index + 1}`);
+      const $workImage = $('<img>').addClass('work__image');
+      $workImage.attr('src', `./images/${project.images[0]}`);
+      $workImage.attr('alt', `photo of project`);
+      const $workInfo = $('<div>').addClass('work__info');
+      const $workCategory = $('<div>')
+        .addClass('work__category')
+        .text(`${project.categories.join(', ')}`);
+      const $workTitle = $('<div>').addClass('work__title').text(project.title);
+
+      $workInfo.append($workTitle, $workCategory);
+      $work.append($workImage, $workInfo);
+      $portfolioItem.append($work);
+      return $portfolioItem;
+    }
+  }
+  function formatDate(dateString) {
+    const [day, month, year] = dateString.split('/');
+    const shortMonths = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return `${day}<br />${shortMonths[parseInt(month, 10) - 1]}`;
+  }
+
+  function getDatetimeValue(dateString) {
+    const [day, month, year] = dateString.split('/');
+    return `${year}-${month}-${day}`;
+  }
+  function generateProjectModalMarkup(projectData) {
+    const { images, title, descr } = projectData;
+    if ($('.modal__project').length > 0) {
+      $('.modal__project').remove();
+    }
+    const modalContainer = $('<div class="modal__project"></div>');
+    const projectImgWrap = $('<div class="project-img-wrap"></div>');
+    const projectMeta = $('<div class="project-meta"></div>');
+    const projectDescr = $('<div class="project-descr"></div>');
+    createProjectImgWrap(title, images);
+    createProjectMeta(projectData);
+    createProjectDescription(descr);
+    modalContainer.append(projectImgWrap, projectMeta, projectDescr);
+
+    function createProjectImgWrap(title, images) {
+      const projectSlider = $('<div class="project-slider"></div>');
+      $.each(images, function (index, image) {
+        const imgElement = $(
+          '<img class="project-picture project-slide' +
+            (index + 1) +
+            '" src="images/' +
+            image +
+            '" alt="project photo"/>',
+        );
+        projectSlider.append(imgElement);
+      });
+
+      const sliderButtons = $(
+        '<ul class="project-slider-buttons"><li><button type="button" class="project-slider-btn project-prev-btn"><i class="fa-solid fa-angle-left"></i>PREVIOUS</button></li><li><button type="button" class="project-slider-btn project-next-btn">NEXT<i class="fa-solid fa-angle-right"></i></button></li></ul>',
+      );
+
+      const projectTitle = $('<h3 class="project-title">' + title + '</h3>');
+
+      projectImgWrap.append(projectSlider, sliderButtons, projectTitle);
+    }
+    function createProjectMeta(projectData) {
+      const { category, date, website } = projectData;
+      const firstLineMeta = $(
+        '<div class="project-meta__first-line"><span class="project-category">' +
+          category +
+          '</span><span class="project-year">' +
+          date +
+          '</span></div>',
+      );
+      const projectInfoList = $('<ul class="project-info"></ul>');
+      $.each(projectData, function (key, value) {
+        if (key === 'industry' || key === 'client' || key === 'timeline') {
+          const listItem = $(
+            '<li class="project-info__item"><p class="meta-title">' +
+              key.charAt(0).toUpperCase() +
+              key.slice(1) +
+              '</p><p class="meta-value ' +
+              key +
+              '-value">' +
+              value +
+              '</p></li>',
+          );
+          projectInfoList.append(listItem);
+        }
+      });
+      const websiteLink = $(
+        '<li class="project-info__item"><p class="meta-title">Website</p><a class="meta-value website-value" href="' +
+          website.link +
+          '" target="_blank">' +
+          website.name +
+          '</a></li>',
+      );
+      projectInfoList.append(websiteLink);
+      projectMeta.append(firstLineMeta, projectInfoList);
+    }
+    function createProjectDescription(descr) {
+      $.each(descr, function (index, paragraph) {
+        const pElement = $('<p>' + paragraph + '</p>');
+        projectDescr.append(pElement);
+      });
+    }
+    $('.project-modal').append(modalContainer);
   }
 });

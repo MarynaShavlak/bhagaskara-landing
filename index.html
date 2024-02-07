@@ -19,8 +19,12 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
     />
     <!-- <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="hire-modal.css" />
-    <link rel="stylesheet" href="project-modal.css" /> -->
+    <link rel="stylesheet" href="hire-modal.css" />-->
+    <link rel="stylesheet" href="project-modal.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/notiflix@3.2.7/src/notiflix.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="index.css" />
     <link
       rel="stylesheet"
@@ -491,6 +495,32 @@
           <h2 class="visually-hidden">Our Clients Reviews</h2>
 
           <ul class="reviews-slider"></ul>
+        </div>
+      </section>
+      <section class="section--portfolio">
+        <div class="container">
+          <h2 class="section__title title--portfolio">
+            Our <span class="text-accent">portfolio</span>
+          </h2>
+          <ul class="portfolio__filter">
+            <li class="filter-btn filter-btn--active" data-filter="*">All</li>
+            <li class="filter-btn" data-filter=".web">Web</li>
+            <li class="filter-btn" data-filter=".apps">Apps</li>
+            <li class="filter-btn" data-filter=".icons">Icons</li>
+          </ul>
+          <ul class="portfolio-list" id="portfolio"></ul>
+          <ul class="btn__list btn__list--load">
+            <li class="btn__item">
+              <button type="button" class="action-btn load-more-btn">
+                Watch more
+              </button>
+            </li>
+            <li class="btn__item">
+              <button type="button" class="action-btn show-less-btn">
+                Show Less
+              </button>
+            </li>
+          </ul>
         </div>
       </section>
       <section class="section--contacts">
@@ -1365,6 +1395,8 @@
     ></script>
     <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
     <script src="isotope.min.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.7/dist/notiflix-aio-3.2.7.min.js
+"></script>
     <script src="script.js" type="module"></script>
   </body>
 </html>
