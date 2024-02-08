@@ -6,35 +6,21 @@
   padding: 0;
 }
 
-/* body {
-  background-color: orange;
-} */
-/* 
-@font-face {
-  font-family: 'YourFontName';
-  src: url('path/to/your/font.woff2') format('woff2'),
-       url('path/to/your/font.woff') format('woff');
-}
-
-body {
-  font-family: 'YourFontName', sans-serif;
-} */
-
 @font-face {
   font-family: 'Existence';
-  src: url('./Existence-Light.woff') format('woff');
+  src: url('../fonts/Existence-Light.woff') format('woff');
 }
 @font-face {
   font-family: 'Helvetica-Light';
-  src: url('./HelveticaNeueCyr-Light.woff') format('woff');
+  src: url('../fonts/HelveticaNeueCyr-Light.woff') format('woff');
 }
 @font-face {
   font-family: 'Helvetica-Regular';
-  src: url('./HelveticaNeueCyr-Medium.woff') format('woff');
+  src: url('../fonts/HelveticaNeueCyr-Medium.woff') format('woff');
 }
 @font-face {
   font-family: 'Helvetica-Bold';
-  src: url('./HelveticaNeueCyr-Bold.woff') format('woff');
+  src: url('../fonts/HelveticaNeueCyr-Bold.woff') format('woff');
 }
 
 body {
@@ -138,7 +124,7 @@ a {
   position: relative;
   color: #fff;
   background-color: #8a8d91;
-  background-image: url(./images/hero-back.png);
+  background-image: url('../images/hero-back.png');
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 30px;
@@ -150,7 +136,8 @@ a {
   z-index: 2;
 }
 
-.canvas-hero {
+.canvas-hero,
+.canvas-banner {
   position: absolute;
   top: 0;
   left: 0;
@@ -443,7 +430,8 @@ a {
 }
 
 .menu__link:hover,
-.menu__link:focus {
+.menu__link:focus,
+.menu__link--active {
   color: #9f449b;
 }
 
@@ -1007,13 +995,18 @@ textarea {
 
 /* Banner  */
 .section--banner {
+  position: relative;
   background-color: #8a8d91;
-  background-image: url('./images/banner-back.png');
+  background-image: url('../images/banner-back.png');
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 40px;
   padding-bottom: 40px;
   height: 300px;
+}
+
+.section--banner .hexagon-icon-wrap {
+  z-index: 2;
 }
 
 .section--banner .hexagon-icon-wrap {
@@ -1024,6 +1017,17 @@ textarea {
   width: 37px;
   height: 32px;
 }
+.section--banner .hexagon-icon {
+  fill: #fff;
+}
+.section--banner .hexagon-icon-wrap:hover .hexagon-icon {
+  fill: #fff;
+}
+
+.section--banner .hexagon-shape {
+  stroke: #fff;
+}
+
 .banner__title {
   font-family: 'Lato', sans-serif;
   color: #fff;

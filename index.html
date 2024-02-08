@@ -23,8 +23,8 @@
       href="https://cdn.jsdelivr.net/npm/notiflix@3.2.7/src/notiflix.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="project-modal.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="stylesheet" href="./styles/project-modal.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -174,7 +174,9 @@
             >Bhagas<span class="text-accent">kara</span></a
           >
           <ul class="menu">
-            <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
+            <li class="menu__item">
+              <a class="menu__link menu__link--active" href="#">Home</a>
+            </li>
             <li class="menu__item"><a class="menu__link" href="#">About</a></li>
             <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
             <li class="menu__item">
@@ -273,6 +275,7 @@
         </div>
       </section>
       <section class="section--banner">
+        <canvas class="canvas-banner"></canvas>
         <div class="container container--centered">
           <div class="hexagon-icon-wrap">
             <svg class="hexagon-shape" width="171" height="185">
@@ -943,5 +946,6 @@
 "></script>
     <script src="script.js" type="module"></script>
     <script src="hero-canvas.js" type="module"></script>
+    <script src="banner-canvas.js" type="module"></script>
   </body>
 </html>
