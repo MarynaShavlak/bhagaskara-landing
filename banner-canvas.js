@@ -3,19 +3,37 @@ class ParticleSystem {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.onResize();
+    this.initWindowSizeParams();
+    window.addEventListener('resize', () => this.onResize());
+  }
 
-    this.particles = [];
+  initWindowSizeParams() {
+    const windowWidth = window.innerWidth;
+    switch (true) {
+      case windowWidth >= 375 && windowWidth < 768:
+        this.setWindowSizeParams(30, 100);
+        break;
+      case windowWidth >= 768 && windowWidth < 1200:
+        this.setWindowSizeParams(40, 120);
+        break;
+      case windowWidth > 1200:
+        this.setWindowSizeParams(60, 160);
+        break;
+      default:
+        this.setWindowSizeParams(40, 120);
+    }
+  }
+
+  setWindowSizeParams(particleCount, lineLength) {
     this.options = {
       bgColor: 'rgba(191,191,191,0.1)',
-      particleCount: 60,
-      particleRadius: 5,
+      particleCount: particleCount,
+      particleRadius: 2,
       particleColor: 'rgba(255,255,255,0.2)',
       particleVelocity: 0.8,
-      lineLength: 160,
+      lineLength: lineLength,
       particleLife: 7,
     };
-
-    window.addEventListener('resize', () => this.onResize());
   }
 
   onResize() {
@@ -203,7 +221,6 @@ class Particle {
   }
 }
 const bannerCanvasList = document.querySelectorAll('.canvas-banner');
-console.log('bannerCanvasList: ', bannerCanvasList);
 bannerCanvasList.forEach(canvas => {
   const particleSystem = new ParticleSystem(canvas);
   particleSystem.init();
