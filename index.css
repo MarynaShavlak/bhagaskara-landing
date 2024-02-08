@@ -135,6 +135,7 @@ a {
 }
 
 .hero {
+  position: relative;
   color: #fff;
   background-color: #8a8d91;
   background-image: url(./images/hero-back.png);
@@ -143,6 +144,17 @@ a {
   padding-top: 30px;
   padding-bottom: 30px;
   height: 700px;
+}
+
+.hero__container {
+  z-index: 2;
+}
+
+.canvas-hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.4;
 }
 
 .hero__meta {
