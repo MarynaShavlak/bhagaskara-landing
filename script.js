@@ -484,7 +484,7 @@ $(document).ready(function () {
           break;
         default:
           columnWidth = 360;
-          gutter = 25;
+          gutter = 30;
       }
 
       const $portfolio = $('.portfolio-list').isotope({

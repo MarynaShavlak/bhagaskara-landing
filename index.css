@@ -6,6 +6,9 @@
   padding: 0;
 }
 
+/* body {
+  background-color: orange;
+} */
 /* 
 @font-face {
   font-family: 'YourFontName';
@@ -99,7 +102,7 @@ a {
 }
 @media screen and (min-width: 1200px) {
   .container {
-    width: 1200px;
+    width: 1170px;
     padding-right: 15px;
     padding-left: 15px;
   }
@@ -114,7 +117,7 @@ a {
 }
 .logo--header {
   color: #fff;
-  font-size: 90px;
+  font-size: 50px;
   font-weight: 700;
   margin: 0 auto;
 }
@@ -137,60 +140,77 @@ a {
   background-image: url(./images/hero-back.png);
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 110px;
-  padding-bottom: 80px;
-  height: 1100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 700px;
 }
 
 .hero__meta {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 124px;
+  margin-bottom: 50px;
 }
 
 .hero__title {
-  font-size: 48px;
+  font-size: 18px;
   font-weight: 400;
-  margin-top: 80px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   color: #fff;
+  text-align: center;
 }
 .hero__text {
-  font-size: 24px;
+  font-size: 14px;
   font-weight: 300;
   color: #fff;
   text-align: center;
-  max-width: 1060px;
+  max-width: 280px;
 }
 
 .hero__decoration-links-list {
   display: flex;
-  gap: 30px;
+  gap: 10px;
 }
 
 .links--first-line {
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
-.links--second-line {
-  justify-content: space-between;
+
+.hero-btn {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
 }
+
+@media screen and (max-width: 767px) {
+  .links--second-line {
+    width: 295px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-btn {
+    margin-top: 20px;
+  }
+}
+
 .line-wrap {
   display: flex;
-  gap: 30px;
+  gap: 10px;
 }
 
 .hexagon-link {
   color: #fff;
-  font-size: 18px;
+  font-size: 14px;
 }
 .hex-link-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -209,16 +229,16 @@ a {
   fill: #9f449b;
 }
 .hero .hexagon-shape.hero-btn-wrap {
-  width: 91px;
-  height: 91px;
+  width: 50px;
+  height: 50px;
 }
 
 .hero .fa-chevron-down {
   font-size: 30px;
 }
 .hero-hexagon-icon {
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   fill: #fff;
 }
 
@@ -230,8 +250,8 @@ a {
 }
 .hexagon-icon-wrap .hexagon-shape {
   stroke: #d1d5d7;
-  width: 71px;
-  height: 85px;
+  width: 90px;
+  height: 90px;
   transition: stroke 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
@@ -256,18 +276,19 @@ a {
 .section--features .hexagon-icon-wrap:hover .hexagon-shape {
   stroke: #9f449b;
 }
-.hero-btn {
-  width: fit-content;
-  height: fit-content;
-  margin: 0 auto;
-  cursor: pointer;
-}
+
 .hero-btn .hexagon-icon {
   width: 30px;
   height: 30px;
 }
 
 @media screen and (min-width: 768px) {
+  .links--first-line {
+    margin-bottom: 30px;
+  }
+  .links--second-line {
+    justify-content: space-between;
+  }
   .logo--header {
     font-size: 60px;
   }
@@ -280,6 +301,9 @@ a {
   .hero__meta {
     margin-bottom: 50px;
   }
+  .hex-link-container {
+    gap: 10px;
+  }
 
   .hero__title {
     font-size: 30px;
@@ -289,6 +313,12 @@ a {
   .hero__text {
     font-size: 20px;
     max-width: 730px;
+  }
+  .hero__decoration-links-list {
+    gap: 30px;
+  }
+  .line-wrap {
+    gap: 30px;
   }
   .hero .hexagon-shape.hero-btn-wrap {
     width: 50px;
@@ -311,14 +341,33 @@ a {
     width: 100px;
     height: 100px;
   }
-  .hero .hero__decoration-link .hexagon-icon {
+  .hero .hero__decoration-link .hero-hexagon-icon {
     width: 30px;
     height: 30px;
+  }
+
+  .hexagon-link {
+    font-size: 14px;
   }
 }
 @media screen and (min-width: 1200px) {
   .logo--header {
     font-size: 90px;
+  }
+  .hero .hero__decoration-link .hexagon-shape {
+    width: 170px;
+    height: 170px;
+  }
+  .hero .hero__decoration-link .hero-hexagon-icon {
+    width: 50px;
+    height: 50px;
+  }
+  .hex-link-container {
+    gap: 20px;
+  }
+
+  .hexagon-link {
+    font-size: 18px;
   }
   .hero {
     padding-top: 110px;
@@ -1726,11 +1775,11 @@ textarea {
   .section--portfolio {
     padding-top: 40px;
   }
-  .section--portfolio:before {
+  .section--portfolio::before {
     top: -60px;
     transform: translate(-50%, 0);
     height: 60px;
-    width: 1280px;
+    width: 1200px;
     margin: 0 auto;
   }
 
