@@ -1,14 +1,14 @@
 class ParticleSystem {
-  constructor() {
-    this.canvas = document.querySelector('.canvas-banner');
+  constructor(canvas) {
+    this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.onResize();
 
     this.particles = [];
     this.options = {
-      bgColor: 'rgba(0,0,0,0.1)',
-      particleCount: 2,
-      particleRadius: 3,
+      bgColor: 'rgba(191,191,191,0.1)',
+      particleCount: 60,
+      particleRadius: 5,
       particleColor: 'rgba(255,255,255,0.2)',
       particleVelocity: 0.8,
       lineLength: 160,
@@ -25,11 +25,15 @@ class ParticleSystem {
   }
 
   init() {
+    this.createParticles();
+    this.animate();
+  }
+
+  createParticles() {
     this.particles = Array.from(
       { length: this.options.particleCount },
-      () => new Particle(),
+      () => new Particle(this),
     );
-    this.animate();
   }
 
   animate() {
@@ -45,16 +49,15 @@ class ParticleSystem {
   }
 
   drawLines() {
-    let x1, y1, x2, y2, length, opacity;
-    for (let i in this.particles) {
-      for (let j in this.particles) {
-        x1 = this.particles[i].x;
-        y1 = this.particles[i].y;
-        x2 = this.particles[j].x;
-        y2 = this.particles[j].y;
-        length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        if (length < this.options.lineLength) {
-          opacity = 1 - length / this.options.lineLength;
+    const { lineLength } = this.options;
+    let length, opacity;
+    for (let i = 0; i < this.particles.length; i++) {
+      for (let j = i + 1; j < this.particles.length; j++) {
+        const { x: x1, y: y1 } = this.particles[i];
+        const { x: x2, y: y2 } = this.particles[j];
+        length = this.distanceTo(x1, x2, y1, y2);
+        if (length < lineLength) {
+          opacity = 1 - length / lineLength;
           this.ctx.lineWidth = '0.5';
           this.ctx.strokeStyle = 'rgba(255,255,255,' + opacity + ')';
           this.ctx.beginPath();
@@ -65,6 +68,9 @@ class ParticleSystem {
         }
       }
     }
+  }
+  distanceTo(x1, x2, y1, y2) {
+    return Math.hypot(x2 - x1, y2 - y1);
   }
 
   drawAllParticles() {
@@ -77,65 +83,107 @@ class ParticleSystem {
 }
 
 class Particle {
-  constructor() {
+  constructor(particleSystem) {
+    this.particleSystem = particleSystem;
     this.reset();
   }
 
   reset() {
+    this.setInitialPosition();
+    this.setInitialVelocity();
+    this.setInitialLife();
+  }
+
+  setInitialPosition() {
     const iconWrap = document.querySelector(
       '.section--banner .hexagon-icon-wrap',
     );
     const bannerSection = document.querySelector('.section--banner');
     const iconRect = iconWrap.getBoundingClientRect();
+    const bannerRect = bannerSection.getBoundingClientRect();
 
     const startX = iconRect.left;
-    const endX = iconRect.right;
-    const startY = iconRect.top;
-    const endY = iconRect.bottom;
+    const startY = iconRect.top - bannerRect.top;
+    const endX = bannerRect.right - iconRect.right;
+    const endY = bannerRect.bottom - iconRect.bottom;
+
     let withinBounds = false;
 
     while (!withinBounds) {
-      this.x = Math.random() * particleSystem.width;
-      this.y = Math.random() * particleSystem.height;
+      this.x = Math.random() * this.particleSystem.width;
+      this.y = Math.random() * this.particleSystem.height;
+      if (!this.isWithinIconBounds(startX, startY, endX, endY)) {
+        withinBounds = true;
+      }
+    }
+  }
+  setInitialVelocity() {
+    this.velX = this.getRandomVelocity();
+    this.velY = this.getRandomVelocity();
+  }
 
+  getRandomVelocity() {
+    return (
+      Math.random() * (this.particleSystem.options.particleVelocity * 2) -
+      this.particleSystem.options.particleVelocity
+    );
+  }
+
+  setInitialLife() {
+    this.life = Math.random() * this.particleSystem.options.particleLife * 60;
+  }
+
+  updatePosition() {
+    this.checkBoundaryCollision('x', this.velX, this.particleSystem.width);
+    this.checkBoundaryCollision('y', this.velY, this.particleSystem.height);
+    const iconWrap = document.querySelector(
+      '.section--banner .hexagon-icon-wrap',
+    );
+    const bannerSection = document.querySelector('.section--banner');
+    const iconRect = iconWrap.getBoundingClientRect();
+    const bannerRect = bannerSection.getBoundingClientRect();
+
+    const startX = iconRect.left;
+    const startY = iconRect.top - bannerRect.top;
+    const endY = bannerRect.bottom - iconRect.bottom;
+    let withinBounds = false;
+
+    while (!withinBounds) {
+      this.move();
       if (
-        this.x < startX ||
-        this.x > endX ||
-        this.y < startY ||
-        this.y > endY
+        !(
+          this.x > startX &&
+          this.x < startX + iconRect.width &&
+          this.y > startY &&
+          this.y < endY
+        )
       ) {
         withinBounds = true;
       }
     }
-
-    this.velX =
-      Math.random() * (particleSystem.options.particleVelocity * 2) -
-      particleSystem.options.particleVelocity;
-    this.velY =
-      Math.random() * (particleSystem.options.particleVelocity * 2) -
-      particleSystem.options.particleVelocity;
-    this.life = Math.random() * particleSystem.options.particleLife * 60;
   }
 
-  updatePosition() {
-    this.checkBoundaryCollision('x', this.velX, particleSystem.width);
-    this.checkBoundaryCollision('y', this.velY, particleSystem.height);
+  isWithinIconBounds(startX, startY, endX, endY) {
+    return this.x > startX && this.x < endX && this.y > startY && this.y < endY;
+  }
+
+  move() {
     this.x += this.velX;
     this.y += this.velY;
   }
-
   draw() {
-    particleSystem.ctx.beginPath();
-    particleSystem.ctx.arc(
+    this.particleSystem.ctx.beginPath();
+    this.particleSystem.ctx.arc(
       this.x,
       this.y,
-      particleSystem.options.particleRadius,
+      this.particleSystem.options.particleRadius,
       0,
       Math.PI * 2,
     );
-    particleSystem.ctx.closePath();
-    particleSystem.ctx.fillStyle = particleSystem.options.particleColor;
-    particleSystem.ctx.fill();
+    this.particleSystem.ctx.closePath();
+    this.particleSystem.ctx.fillStyle =
+      this.particleSystem.options.particleColor;
+    this.particleSystem.ctx.fill();
   }
 
   checkBoundaryCollision(axis, velocity, boundary) {
@@ -154,6 +202,9 @@ class Particle {
     this.life -= 1;
   }
 }
-
-const particleSystem = new ParticleSystem();
-particleSystem.init();
+const bannerCanvasList = document.querySelectorAll('.canvas-banner');
+console.log('bannerCanvasList: ', bannerCanvasList);
+bannerCanvasList.forEach(canvas => {
+  const particleSystem = new ParticleSystem(canvas);
+  particleSystem.init();
+});

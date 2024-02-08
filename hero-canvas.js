@@ -58,7 +58,7 @@ class Circle {
 }
 
 class CanvasAnimation {
-  constructor() {
+  constructor(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.resizeCanvas();
